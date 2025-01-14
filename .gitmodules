@@ -37,3 +37,6 @@
 	path = sdk/OpenRTL87X0C
 	url = https://github.com/NonPIayerCharacter/OpenRTL87X0C.git
 	branch = main
+[submodule "sdk/OpenECR6600"]
+	path = sdk/OpenECR6600
+	url = https://github.com/jasperro/OpenECR6600
