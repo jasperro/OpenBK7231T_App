@@ -151,6 +151,8 @@ void CFG_SetDefaultConfig() {
 	strcpy_safe(g_cfg.mqtt_group, "esp", sizeof(g_cfg.mqtt_group));
 #elif PLATFORM_TR6260
 	strcpy_safe(g_cfg.mqtt_group, "tr6260", sizeof(g_cfg.mqtt_group));
+#elif PLATFORM_ECR6600
+	strcpy_safe(g_cfg.mqtt_group, "ecr6600", sizeof(g_cfg.mqtt_group));
 #elif PLATFORM_RTL87X0C
 	strcpy_safe(g_cfg.mqtt_group, "rtl87x0c", sizeof(g_cfg.mqtt_group));
 #elif WINDOWS
@@ -732,7 +734,7 @@ void CFG_InitAndLoad() {
 		// mark as changed
 		g_cfg_pendingChanges ++;
 	} else {
-#if defined(PLATFORM_XR809) || defined(PLATFORM_BL602) || defined(PLATFORM_ESPIDF) || defined(PLATFORM_TR6260)
+#if defined(PLATFORM_XR809) || defined(PLATFORM_BL602) || defined(PLATFORM_ESPIDF) || defined(PLATFORM_TR6260) || defined(PLATFORM_ECR6600)
 		if (g_cfg.mac[0] == 0 && g_cfg.mac[1] == 0 && g_cfg.mac[2] == 0 && g_cfg.mac[3] == 0 && g_cfg.mac[4] == 0 && g_cfg.mac[5] == 0) {
 			WiFI_GetMacAddress((char*)g_cfg.mac);
 		}

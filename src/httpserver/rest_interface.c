@@ -1442,7 +1442,7 @@ static int ota_verify_download(void)
 static int http_rest_post_flash(http_request_t* request, int startaddr, int maxaddr)
 {
 
-#if PLATFORM_XR809 || PLATFORM_TR6260
+#if PLATFORM_XR809 || PLATFORM_TR6260 || PLATFORM_ECR6600
 	return 0;	//Operation not supported yet
 #endif
 
@@ -2309,7 +2309,7 @@ static int http_rest_get_flash(http_request_t* request, int startaddr, int len) 
 		res = bl_flash_read(startaddr, (uint8_t *)buffer, readlen);
 #elif PLATFORM_W600 || PLATFORM_W800
 		res = 0;
-#elif PLATFORM_LN882H || PLATFORM_ESPIDF || PLATFORM_TR6260
+#elif PLATFORM_LN882H || PLATFORM_ESPIDF || PLATFORM_TR6260 || PLATFORM_ECR6600
 // TODO:LN882H flash read?
         res = 0;
 #elif PLATFORM_RTL87X0C
