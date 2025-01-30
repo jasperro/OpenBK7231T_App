@@ -1,12 +1,12 @@
-VPATH  += $(OBK_PATH)
-DEFINE += -DUSER_SW_VER='"$(APP_VERSION)"'
-DEFINE += -DPLATFORM_ECR6600
-DEFINE += -DTCP_MSL=1000
+VPATH  += :$(OBK_PATH)
+CFLAGS += -DUSER_SW_VER='"$(APP_VERSION)"'
+CFLAGS += -DPLATFORM_ECR6600
+CFLAGS += -DTCP_MSL=1000
 
 CSRCS  += base64/base64.c
 CSRCS  += bitmessage/bitmessage_read.c
 CSRCS  += bitmessage/bitmessage_write.c
-CSRCS  += cJSON/cJSON.c
+# CSRCS  += cJSON/cJSON.c
 CSRCS  += cmnds/cmd_channels.c
 CSRCS  += cmnds/cmd_eventHandlers.c
 CSRCS  += cmnds/cmd_if.c
@@ -131,7 +131,7 @@ CSRCS  += i2c/drv_i2c_main.c
 CSRCS  += i2c/drv_i2c_mcp23017.c
 CSRCS  += i2c/drv_i2c_tc74.c
 CSRCS  += littlefs/lfs_util.c
-CSRCS  += littlefs/lfs.c
+# CSRCS  += littlefs/lfs.c
 CSRCS  += littlefs/our_lfs.c
 #CSRCS  += memory/memtest.c
 #CSRCS  += ota/ota.c

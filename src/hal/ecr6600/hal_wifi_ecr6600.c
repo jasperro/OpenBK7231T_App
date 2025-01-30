@@ -3,6 +3,7 @@
 #include "../hal_wifi.h"
 #include "../../new_common.h"
 #include <lwip/sockets.h>
+#include <lwip/ip4_addr.h>
 #include <stdbool.h>
 #include "system_event.h"
 #include "system_wifi.h"
@@ -115,7 +116,7 @@ static sys_err_t handle_wifi_event(void* ctx, system_event_t* event)
 			HAL_RebootModule();
 			break;
 		}
-		case SYSTEM_EVENT_STA_ASSOC_REJECT:
+		case SYSTEM_EVENT_STA_SAE_AUTH_FAIL:
 		case SYSTEM_EVENT_STA_4WAY_HS_FAIL:
 		{
 			if(g_wifiStatusCallback != NULL)
@@ -204,16 +205,15 @@ int HAL_SetupWiFiOpenAccessPoint(const char* ssid)
 	}
 
 	memset(&ip_info, 0, sizeof(ip_info));
-	ip_info.ip.addr = ipaddr_addr((const char*)"192.168.4.1");
-	ip_info.gw.addr = ipaddr_addr((const char*)"192.168.4.1");
-	ip_info.netmask.addr = ipaddr_addr((const char*)"255.255.255.0");
+	IP4_ADDR(&ip_info.ip,192,168,4,1);
+	IP4_ADDR(&ip_info.gw,192,168,4,1);
+	IP4_ADDR(&ip_info.netmask,255,255,255,0);
 	set_softap_ipconfig(&ip_info);
 
 	struct dhcps_lease dhcp_cfg_info;
 	dhcp_cfg_info.enable = true;
-	dhcp_cfg_info.start_ip.addr = ipaddr_addr((const char*)"192.168.4.100");
-	dhcp_cfg_info.end_ip.addr = ipaddr_addr((const char*)"192.168.4.150");
-
+	IP4_ADDR(&dhcp_cfg_info.start_ip,192,168,4,100);
+	IP4_ADDR(&dhcp_cfg_info.end_ip,192,168,4,150);
 	wifi_softap_set_dhcps_lease(&dhcp_cfg_info);
 	wifi_get_ip_info(SOFTAP_IF, &if_ip);
 	if(g_wifiStatusCallback != NULL)

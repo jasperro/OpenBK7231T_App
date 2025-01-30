@@ -35,7 +35,7 @@ else
 endif
 
 update-submodules: submodules
-	git add sdk/OpenBK7231T sdk/OpenBK7231N sdk/OpenXR809 sdk/OpenBL602 sdk/OpenW800 sdk/OpenW600 sdk/OpenLN882H sdk/esp-idf sdk/OpenTR6260
+	git add sdk/OpenBK7231T sdk/OpenBK7231N sdk/OpenXR809 sdk/OpenBL602 sdk/OpenW800 sdk/OpenW600 sdk/OpenLN882H sdk/esp-idf sdk/OpenTR6260 sdc/OpenECR6600
 ifdef GITHUB_ACTIONS
 	git config user.name github-actions
 	git config user.email github-actions@github.com
@@ -75,7 +75,7 @@ sdk/OpenLN882H/project/OpenBeken/app:
 	ln -s "$(shell pwd)/" "sdk/OpenLN882H/project/OpenBeken/app"
 
 .PHONY: prebuild_OpenBK7231N prebuild_OpenBK7231T prebuild_OpenBL602 prebuild_OpenLN882H 
-.PHONY: prebuild_OpenW600 prebuild_OpenW800 prebuild_OpenXR809 prebuild_ESPIDF prebuild_OpenTR6260
+.PHONY: prebuild_OpenW600 prebuild_OpenW800 prebuild_OpenXR809 prebuild_ESPIDF prebuild_OpenTR6260 prebuild_OpenECR6600
 .PHONY: prebuild_OpenRTL87X0C
 
 prebuild_OpenBK7231N:
@@ -148,6 +148,14 @@ prebuild_OpenTR6260:
 		echo "prebuild found for OpenTR6260"; \
 		sh platforms/TR6260/pre_build.sh; \
 	else echo "prebuild for OpenTR6260 not found ... "; \
+	fi
+
+prebuild_OpenECR6600:
+	git submodule update --init --recursive sdk/OpenECR6600
+	@if [ -e platforms/ECR6600/pre_build.sh ]; then \
+		echo "prebuild found for OpenECR6600"; \
+		sh platforms/ECR6600/pre_build.sh; \
+	else echo "prebuild for OpenECR6600 not found ... "; \
 	fi
 
 prebuild_OpenRTL87X0C:
@@ -294,6 +302,12 @@ OpenTR6260: prebuild_OpenTR6260
 	cd sdk/OpenTR6260/scripts && APP_VERSION=$(APP_VERSION) bash build_tr6260s1.sh
 	mkdir -p output/$(APP_VERSION)
 	cp sdk/OpenTR6260/out/tr6260s1/standalone/tr6260s1_0x007000.bin output/$(APP_VERSION)/OpenTR6260_$(APP_VERSION).bin
+
+.PHONY: OpenECR6600
+OpenECR6600: prebuild_OpenECR6600
+	if [ ! -e sdk/OpenECR6600/tool/nds32le-elf-mculib-v3s ]; then cd sdk/OpenECR6600/tool && xz -d < nds32le-elf-mculib-v3s.txz | tar xvf - > /dev/null; fi
+	cd sdk/OpenECR6600/Boards/ecr6600/openbeken && APP_VERSION=$(APP_VERSION) make all
+	mkdir -p output/$(APP_VERSION)
 	
 .PHONY: OpenRTL87X0C
 OpenRTL87X0C: prebuild_OpenRTL87X0C

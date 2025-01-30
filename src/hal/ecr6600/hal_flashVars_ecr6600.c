@@ -3,6 +3,7 @@
 #include "../../new_common.h"
 #include "../hal_flashVars.h"
 #include "../../logging/logging.h"
+#include "easyflash.h"
 
 FLASH_VARS_STRUCTURE flash_vars;
 static int flash_vars_init_flag = 0;

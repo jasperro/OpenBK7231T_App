@@ -1,7 +1,7 @@
 #ifdef PLATFORM_ECR6600
 
 #include "../hal_flashConfig.h"
-#include <easyflash.h>
+#include "easyflash.h"
 
 int HAL_Configuration_ReadConfigMemory(void* target, int dataLen)
 {

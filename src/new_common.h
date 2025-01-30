@@ -508,7 +508,6 @@ OSStatus rtos_suspend_thread(beken_thread_t* thread);
 #define GLOBAL_INT_RESTORE()		;
 
 #elif PLATFORM_ECR6600
-
 #include <stdbool.h>
 #include "FreeRTOS.h"
 #include "task.h"
@@ -527,6 +526,7 @@ typedef unsigned int UINT32;
 #undef ASSERT
 #define ASSERT
 
+#undef os_malloc
 #define os_malloc pvPortMalloc
 #define os_free vPortFree
 #define os_memset memset
@@ -661,7 +661,7 @@ typedef unsigned char byte;
 
 
 // stricmp fix
-#if WINDOWS
+#if WINDOWS || PLATFORM_ECR6600
 
 
 #else
@@ -682,7 +682,7 @@ int strcpy_safe_checkForChanges(char *tg, const char *src, int tgMaxLen);
 void urldecode2_safe(char *dst, const char *srcin, int maxDstLen);
 int strIsInteger(const char *s);
 
-#if !defined(PLATFORM_ESPIDF) && !defined(PLATFORM_TR6260)
+#if !defined(PLATFORM_ESPIDF) && !defined(PLATFORM_TR6260) && !defined(PLATFORM_ECR6600)
 const char* strcasestr(const char* str1, const char* str2);
 #endif
 

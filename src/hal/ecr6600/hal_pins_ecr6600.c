@@ -4,8 +4,8 @@
 #include "../../logging/logging.h"
 #include "../../new_cfg.h"
 #include "../../new_pins.h"
-#include "drv_gpio.h"
-#include "drv_pwm.h"
+#include "hal_gpio.h"
+#include "hal_pwm.h"
 #include "chip_pinmux.h"
 
 extern int g_pwmFrequency;
@@ -13,7 +13,7 @@ extern int g_pwmFrequency;
 typedef struct ecrPinMapping_s
 {
 	const char* name;
-	ECR_PIN_NAME pin;
+	int pin;
 } ecrPinMapping_t;
 
 ecrPinMapping_t g_pins[] = {
@@ -133,7 +133,7 @@ void HAL_PIN_SetOutputValue(int index, int iVal)
 {
 	// Has check for index >= g_numPins built in to SDK.
 	// Will return different negative values for different errors.
-	drv_gpio_write(index, iVal)
+	drv_gpio_write(index, iVal);
 }
 
 int HAL_PIN_ReadDigitalInput(int index)
